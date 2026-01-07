@@ -1,0 +1,41 @@
+.header_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 22px 80px;
+  gap: 261px;
+}
+
+.header_title {
+  color: #FFF;
+  font-size: 22px;
+  font-weight: 500;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.search_input {
+  background-color: #0F0F0F;
+  border: 4px solid #1F1F1F;
+  padding: 10px 25px;
+  height: 100%;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 12px;
+  color: #FFF;
+}
+
+.search_wrapp {
+  position: relative;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  width: 450px;
+}
+
+.search_btn {
+  position: absolute;
+  background: transparent;
+  border: none;
+  right: 25px;
+  cursor: pointer;
+}

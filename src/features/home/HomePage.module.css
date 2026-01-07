@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+  width: 100%;
+  max-width: 1280px;
+  border: 1px solid #262626;
+  margin: auto;
+  margin-top: 120px;
+  border-radius: 12px;
+}
