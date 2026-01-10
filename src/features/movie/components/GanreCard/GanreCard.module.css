@@ -3,13 +3,27 @@
   border: 1px solid #262626;
   border-radius: 10px;
   padding: 24px;
+  visibility: hidden;
 }
 
 .ganre_img {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
   gap: 5px;
+}
+
+.ganre_img::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(26, 26, 26, 1), rgba(26, 26, 26, 0));
+  z-index: 1;
+  pointer-events: none;
 }
 
 .ganre_poster {
@@ -17,10 +31,15 @@
   width: 85.5px;
   height: 91px;
   border-radius: 6px;
+  visibility: hidden;
+}
+
+.block {
+  visibility: visible;
 }
 
 .ganre_name {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
   color: #FFF;

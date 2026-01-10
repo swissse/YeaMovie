@@ -1,14 +1,24 @@
 import { useEffect, useState } from 'react';
+import { getCache, setCache } from '../../shared/utils/cache';
 
 export default function useFetch(url: string, params: any) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const cacheKey = `${url}?${JSON.stringify(params)}`;
+
   useEffect(() => {
     setIsLoading(true);
     setError(null);
     setData(null);
+
+    const cached = getCache<any>(cacheKey);
+    if (cached) {
+      setData(cached);
+      setIsLoading(false);
+      return;
+    }
 
     const abortController = new AbortController();
 
@@ -29,6 +39,7 @@ export default function useFetch(url: string, params: any) {
       .then(data => {
         setData(data);
         setError(null);
+        setCache(cacheKey, data);
       })
       .catch(error => {
         if (error.name !== 'AbortError') {
@@ -40,6 +51,6 @@ export default function useFetch(url: string, params: any) {
     return () => {
       abortController.abort();
     };
-  }, [url]);
+  }, [url, cacheKey]);
   return { data, isLoading, error };
 }

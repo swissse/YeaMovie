@@ -10,19 +10,39 @@ interface getGanreRowProps {
   type: string;
   limit: number;
   page: number;
-  ratingImdb: string;
   ganre: string;
-  votesImdb: string;
-  sort: string;
+  sortType: string[];
+  sortField: string[];
+}
+
+interface getTitleRowTrendingProps {
+  type: string;
+  limit: number;
+  page: number;
+  sortType: string[];
+  sortField: string[];
+  premiereWorld?: string[];
+  votesImdb?: string;
+  ratingImdb?: string;
+  year?: string[];
+}
+
+interface getSearchValueProps {
+  limit: number;
+  page: number;
+  name: string;
+  sortType: string[];
+  sortField: string[];
 }
 
 export function getBannerInfo(): Pesponse {
   return useFetch('https://api.poiskkino.dev/v1.4/movie', {
-    'rating.kp': '7.8-9',
     type: 'movie',
     limit: 4,
     page: 1,
-    'votes.kp': '800000-999999',
+    year: '2000-2025',
+    sortField: ['votes.imdb'],
+    sortType: ['-1'],
   });
 }
 
@@ -30,18 +50,62 @@ export function getGanreRow({
   type,
   limit,
   page,
-  ratingImdb,
   ganre,
-  votesImdb,
-  sort,
+  sortType,
+  sortField,
 }: getGanreRowProps): Pesponse {
   return useFetch('https://api.poiskkino.dev/v1.4/movie', {
     type,
     limit,
-    sort,
+    sortType,
     page,
-    'rating.imdb': ratingImdb,
     'genres.name': ganre,
+    sortField,
+  });
+}
+
+export function getTitleRowTrending({
+  type,
+  limit,
+  page,
+  sortType,
+  sortField,
+}: getTitleRowTrendingProps) {
+  return useFetch('https://api.poiskkino.dev/v1.4/movie', {
+    type,
+    limit,
+    page,
+    sortType,
+    sortField,
+  });
+}
+
+export function getTitleRowNew({
+  type,
+  limit,
+  page,
+  sortType,
+  sortField,
+  premiereWorld,
+  votesImdb,
+}: getTitleRowTrendingProps) {
+  return useFetch('https://api.poiskkino.dev/v1.4/movie', {
+    type,
+    limit,
+    page,
+    sortType,
+    sortField,
+    'premiere.world': premiereWorld,
     'votes.imdb': votesImdb,
+  });
+}
+
+export function getSearchValue({ limit, page, name, sortField, sortType }: getSearchValueProps) {
+  return useFetch('https://api.poiskkino.dev/v1.4/movie', {
+    limit,
+    page,
+    name,
+    sortField,
+    sortType,
   });
 }

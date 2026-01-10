@@ -11,4 +11,12 @@ export interface Film {
     url: string;
     previewUrl: string;
   };
+  movieLength: number;
+  year: number;
+  rating: {
+    imdb: number;
+    kp: number;
+  };
+  genres: { name: string }[];
+  type: string;
 }

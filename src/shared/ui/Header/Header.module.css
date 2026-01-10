@@ -2,11 +2,12 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 22px 80px;
+  padding: 22px 80px 50px 80px;
   gap: 261px;
 }
 
 .header_title {
+  cursor: pointer;
   color: #FFF;
   font-size: 22px;
   font-weight: 500;
@@ -16,7 +17,7 @@
 .search_input {
   background-color: #0F0F0F;
   border: 4px solid #1F1F1F;
-  padding: 10px 25px;
+  padding: 10px 20px;
   height: 100%;
   width: 100%;
   font-size: 18px;
@@ -26,10 +27,10 @@
 
 .search_wrapp {
   position: relative;
-  height: 65px;
+  height: 50px;
   display: flex;
   align-items: center;
-  width: 450px;
+  width: 400px;
 }
 
 .search_btn {
@@ -38,4 +39,9 @@
   border: none;
   right: 25px;
   cursor: pointer;
+
+  img {
+    height: 24px;
+    width: 24px;
+  }
 }

@@ -1,0 +1,43 @@
+.title_btns_wrapp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title {
+  font-weight: 700;
+  color: #FFF;
+  font-size: 30px;
+  line-height: 1.5;
+}
+
+.title_row_container {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.film_row_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.skeleton_card {
+  width: 225px;
+  height: 308px;
+  background: #1A1A1A;
+  border: 1px solid #262626;
+  border-radius: 12px;
+  padding: 16px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}

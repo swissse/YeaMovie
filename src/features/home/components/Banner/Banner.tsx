@@ -15,9 +15,10 @@ interface Film {
 }
 
 export default function Banner() {
-  const { data, isLoading, error } = getBannerInfo();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { data, isLoading } = getBannerInfo();
 
   useEffect(() => {
     setIsLoaded(false);
@@ -34,13 +35,22 @@ export default function Banner() {
   const films = apiData?.docs || [];
   const currentFilm = apiData?.docs[currentIndex];
 
-  console.log(data, isLoading, error);
-
   return (
     <>
       <div className={s.banner_container}>
         <>
-          {!isLoaded && <Loader size={50} color="#E50000" />}
+          {!isLoaded && (
+            <Loader
+              cssOverride={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+              size={50}
+              color="#E50000"
+            />
+          )}
 
           <img
             key={currentFilm?.id}

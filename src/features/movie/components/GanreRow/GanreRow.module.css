@@ -26,3 +26,12 @@
   gap: 17px;
   flex-wrap: wrap;
 }
+
+.skeleton_card {
+  background: #1A1A1A;
+  border: 1px solid #262626;
+  border-radius: 10px;
+  padding: 24px;
+  width: 226px;
+  height: 264px;
+}

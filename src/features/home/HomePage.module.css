@@ -14,4 +14,9 @@
   margin: auto;
   margin-top: 120px;
   border-radius: 12px;
+  gap: 80px;
+}
+
+.movie_container:last-child {
+  margin-bottom: 80px;
 }

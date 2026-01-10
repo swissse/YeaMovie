@@ -1,0 +1,9 @@
+.searchPage_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  padding: 0 80px 80px 80px;
+  gap: 10px 20px;
+}
