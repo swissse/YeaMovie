@@ -3,7 +3,10 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 1200px;
-  padding: 0 80px 80px 80px;
-  gap: 10px 20px;
+  max-width: 1280px;
+  min-height: 800px;
+  gap: 7px 20px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+  position: relative;
 }

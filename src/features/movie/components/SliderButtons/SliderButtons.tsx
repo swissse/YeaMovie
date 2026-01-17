@@ -1,16 +1,14 @@
 import { type Dispatch, type SetStateAction } from 'react';
 import s from './SliderButtons.module.css';
-import type { Film } from '../../../../shared/Types';
-
 interface SliderButtonsProps {
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
-  type: string;
+  type?: string;
+  lastPage?: number;
 }
 
-export default function SliderButtons({ setPage, page, type }: SliderButtonsProps) {
+export default function SliderButtons({ setPage, page, type, lastPage }: SliderButtonsProps) {
   const films = Array(type === 'film' ? 4 : 2).fill(' ');
-  console.log(page);
 
   function handleNextPage() {
     if (type === 'search') return setPage(prev => prev + 1);
@@ -30,30 +28,31 @@ export default function SliderButtons({ setPage, page, type }: SliderButtonsProp
       <div className={s.slider_btns_status}>
         {type === 'search' ? (
           <div className={s.status_number}>
-            {page > 1 && (
-              <span
-                onClick={() => setPage(prev => (prev > 1 ? prev - 1 : prev))}
-                className={s.number}
-              >
-                {page - 1}
-              </span>
+            {lastPage && (
+              <>
+                {page > 1 && (
+                  <span
+                    onClick={() => setPage(prev => (prev > 1 ? prev - 1 : prev))}
+                    className={s.number}
+                  >
+                    {page - 1}
+                  </span>
+                )}
+                <span className={s.active_number}>{page}</span>
+                <span onClick={() => setPage(prev => prev + 1)} className={s.number}>
+                  {page + 1 >= lastPage ? null : page + 1}
+                </span>
+                <span onClick={() => setPage(lastPage)} className={s.number}>
+                  {page === lastPage ? null : `...${lastPage}`}
+                </span>
+              </>
             )}
-            <span className={s.active_number}>{page}</span>
-            <span onClick={() => setPage(prev => prev + 1)} className={s.number}>
-              {page + 1}
-            </span>
-            <span onClick={() => setPage(prev => prev + 2)} className={s.number}>
-              {page + 2}
-            </span>
-            <span onClick={() => setPage(prev => prev + 5)} className={s.number}>
-              {page + 5}
-            </span>
           </div>
         ) : (
-          films.map((film: Film, index: number) => {
+          films.map((_, index: number) => {
             return (
               <span
-                key={film.id}
+                key={index}
                 className={`${s.default_status} ${page === index + 1 ? s.active : ''}`}
                 onClick={() => setPage(index + 1)}
               ></span>
@@ -61,7 +60,7 @@ export default function SliderButtons({ setPage, page, type }: SliderButtonsProp
           })
         )}
       </div>
-      <button className={s.btn_change} onClick={handleNextPage}>
+      <button className={s.btn_change} onClick={handleNextPage} disabled={page === lastPage}>
         <img src="next.svg" />
       </button>
     </div>

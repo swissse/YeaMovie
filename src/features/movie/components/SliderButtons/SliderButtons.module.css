@@ -16,6 +16,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  align-self: flex-end;
+  justify-self: center;
 }
 
 .status_number {
@@ -29,6 +31,10 @@
   font-weight: 500;
   font-size: 18px;
   cursor: pointer;
+}
+
+.number:last-child {
+  margin-left: 10px;
 }
 
 .active_number {

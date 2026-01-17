@@ -18,8 +18,6 @@ export default function GanreRow({ type }: GanreRowProps) {
     return ganre.slice((page - 1) * 5, page * 5);
   }, [page]);
 
-  console.log(isLoading);
-
   return (
     <div className={s.ganre_row_wrapper}>
       <>

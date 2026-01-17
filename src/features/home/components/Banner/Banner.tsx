@@ -2,17 +2,7 @@ import { useEffect, useState } from 'react';
 import s from './Banner.module.css';
 import { getBannerInfo } from '../../api/rest';
 import Loader from '../../../../shared/ui/Loader';
-
-interface Film {
-  id: number;
-  alternativeName: string;
-  name: string;
-  shortDescription: string;
-  backdrop?: {
-    url: string;
-    previewUrl: string;
-  };
-}
+import type { Film } from '../../../../shared/Types';
 
 export default function Banner() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -57,7 +47,7 @@ export default function Banner() {
             onLoad={() => setIsLoaded(true)}
             className={`${s.banner_img} ${isLoaded && s.block}`}
             src={currentFilm?.backdrop?.url}
-            alt="preview работает только с VPN, так как картинки из зарубежного источника ):"
+            alt="preview работает только с VPN, так как картинки из зарубежного источника :("
           />
 
           <h2 className={s.banner_title}>{currentFilm?.name ?? currentFilm?.alternativeName}</h2>

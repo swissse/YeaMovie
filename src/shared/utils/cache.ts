@@ -1,4 +1,4 @@
-const CACHE_TTL = 1000 * 60 * 60 * 2;
+const CACHE_TTL = 1000 * 60 * 60 * 24 * 7; // 7 дней
 
 export function getCache<T>(key: string): T | null {
   const raw = localStorage.getItem(key);

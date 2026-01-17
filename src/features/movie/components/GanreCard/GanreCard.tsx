@@ -42,7 +42,7 @@ export default function GanreCard({ ganre, type, page, setIsLoading }: GanreCard
               <img
                 key={img.id}
                 onLoad={() => setIsLoaded(true)}
-                className={`${s.ganre_poster} ${isLoaded && s.block}`}
+                className={`${s.ganre_poster} ${isLoaded && s.visible}`}
                 src={img.poster?.url}
               />
             );

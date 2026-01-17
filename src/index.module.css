@@ -17,3 +17,7 @@ body {
   margin: 0 auto;
   height: 100dvh;
 }
+
+a {
+  text-decoration: none;
+}

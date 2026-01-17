@@ -1,17 +1,19 @@
 .ganre_card {
+  max-width: 224px;
   background: #1A1A1A;
   border: 1px solid #262626;
   border-radius: 10px;
-  padding: 24px;
-  visibility: hidden;
+  padding: 22px;
+  display: none;
 }
 
 .ganre_img {
+  width: 176px;
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
-  gap: 5px;
+  gap: 4px;
 }
 
 .ganre_img::after {
@@ -34,8 +36,12 @@
   visibility: hidden;
 }
 
-.block {
+.visible {
   visibility: visible;
+}
+
+.block {
+  display: block;
 }
 
 .ganre_name {

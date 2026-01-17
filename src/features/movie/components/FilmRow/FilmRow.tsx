@@ -6,6 +6,7 @@ import { getTitleRowNew, getTitleRowTrending } from '../../../home/api/rest';
 import type { Film } from '../../../../shared/Types';
 import FilmCard from '../FilmCard/FilmCard';
 import Loader from '../../../../shared/ui/Loader';
+import { Link } from 'react-router';
 
 interface FilmRowProps {
   type: string;
@@ -35,8 +36,6 @@ export default function FilmRow({ type, typeContent, title }: FilmRowProps) {
 
   const films = apiData?.docs || [];
 
-  console.log(films);
-
   return (
     <div className={s.film_row_wrapper}>
       <div className={s.title_btns_wrapp}>
@@ -64,7 +63,9 @@ export default function FilmRow({ type, typeContent, title }: FilmRowProps) {
             })
           : films.map(film => {
               return (
-                <FilmCard type={type} key={film.id} typeContent={typeContent} filmData={film} />
+                <Link to={`/movie/${film.id}`} key={film.id}>
+                  <FilmCard type={type} typeContent={typeContent} filmData={film} />
+                </Link>
               );
             })}
       </div>

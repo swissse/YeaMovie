@@ -23,7 +23,7 @@ export const TitleRowRequestNew = {
 };
 
 export const SearchValueRequest = {
-  limit: 12,
+  limit: 15,
   page: 1,
 };
 

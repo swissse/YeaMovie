@@ -78,21 +78,35 @@ export default function FilmCard({ filmData, typeContent, type }: FilmCardProps)
           )}
           {typeContent === 'search' ? (
             <>
-              <img
-                onLoad={() => setIsLoaded(true)}
-                className={`${s.film_img} ${isLoaded && s.visibility}`}
-                src={filmData.poster?.previewUrl}
-                alt="Нет постера"
-              />
+              {!filmData.poster?.previewUrl ? (
+                <div className={s.drop}>
+                  <img src="sad.png" />
+                  <div className={s.drop_name}>Нет постера</div>
+                </div>
+              ) : (
+                <img
+                  onLoad={() => setIsLoaded(true)}
+                  className={`${s.film_img} ${isLoaded && s.visibility}`}
+                  src={filmData.poster?.previewUrl}
+                  alt=""
+                />
+              )}
+
               {<span className={s.img_rating}>{filmData.rating.imdb}</span>}
             </>
           ) : (
-            <img
-              onLoad={() => setIsLoaded(true)}
-              className={`${s.film_img} ${isLoaded && s.visibility}`}
-              src={filmData.poster?.previewUrl}
-              alt="Нет постера"
-            />
+            <>
+              {!filmData.poster?.previewUrl ? (
+                <img src="sad.png" />
+              ) : (
+                <img
+                  onLoad={() => setIsLoaded(true)}
+                  className={`${s.film_img} ${isLoaded && s.visibility}`}
+                  src={filmData.poster?.previewUrl}
+                  alt=""
+                />
+              )}
+            </>
           )}
         </div>
 
