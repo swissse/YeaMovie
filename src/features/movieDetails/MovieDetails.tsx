@@ -10,17 +10,30 @@ export default function MovieDetails() {
   const [LoadedCount, setLoadedCount] = useState(0);
   const [pagePersons, setPagePersons] = useState(0);
   const [pageFilm, setPageFilm] = useState(0);
+  const [personsLoaded, setPersonsLoaded] = useState(0);
   const { id } = useParams<{ id: string }>();
   const movieId = Number(id);
 
   const { data, isLoading } = getMovieInfo(!Number.isNaN(movieId) ? movieId : undefined);
 
   useEffect(() => {
-    setIsLoaded(false);
-    setLoadedCount(0);
-  }, [data?.id, pageFilm]);
+    setPersonsLoaded(0);
+  }, [pagePersons]);
 
-  const persons = data?.persons.slice(pagePersons * 8, pagePersons * 8 + 8);
+  useEffect(() => {
+    setLoadedCount(0);
+  }, [pageFilm]);
+
+  useEffect(() => {
+    setIsLoaded(false);
+    setPageFilm(0);
+    setPagePersons(0);
+  }, [data?.id]);
+  const PER_PAGE = 7;
+  const maxPage = data?.persons ? Math.floor((data.persons.length - 1) / PER_PAGE) : 0;
+
+  const persons = data?.persons.slice(pagePersons * PER_PAGE, (pagePersons + 1) * PER_PAGE);
+
   const similarMovies = data?.similarMovies?.slice(pageFilm * 6, pageFilm * 6 + 6);
 
   return (
@@ -65,7 +78,14 @@ export default function MovieDetails() {
       <div className={s.content_grid}>
         <div className={s.description_container}>
           <span className={s.title}>Описание</span>
-          <p className={s.description_text}>{data?.description}</p>
+          {data?.description ? (
+            <p className={s.description_text}>{data?.description}</p>
+          ) : (
+            <div className={s.no_desc}>
+              <img src="/sad.png" alt="" />
+              <p>Отсутствует описание</p>
+            </div>
+          )}
         </div>
 
         <div className={s.persons_container}>
@@ -74,25 +94,39 @@ export default function MovieDetails() {
             <div className={s.btn_container}>
               <button
                 onClick={() => {
-                  setPagePersons(prev => (prev ? prev - 1 : prev));
+                  setPagePersons(p => Math.max(0, p - 1));
                 }}
               >
                 <img src="/prev.svg" alt="" />
               </button>
               <button
                 onClick={() => {
-                  if (data?.persons && data?.persons.length > (pagePersons + 1) * 8)
-                    setPagePersons(prev => prev + 1);
+                  setPagePersons(p => Math.min(maxPage, p + 1));
                 }}
               >
                 <img src="/next.svg" alt="" />
               </button>
             </div>
           </div>
-          <div className={s.persons_row}>
-            {persons?.map(person => {
-              return <img key={person.id} src={person.photo} alt="" />;
+          <div className={`${s.persons_row} ${maxPage === pagePersons && s.last_page}`}>
+            {persons?.map((person, index) => {
+              return (
+                <img
+                  className={`${persons.length === personsLoaded ? s.block : s.no_visibility}`}
+                  key={`${person.id}_${pagePersons}_${index}`}
+                  src={person.photo}
+                  onLoad={() => setPersonsLoaded(prev => prev + 1)}
+                  alt=""
+                />
+              );
             })}
+            {persons?.length !== personsLoaded && (
+              <Loader
+                size={35}
+                color="#E50000"
+                cssOverride={{ display: 'flex', justifySelf: 'center', alignSelf: 'center' }}
+              />
+            )}
           </div>
         </div>
 

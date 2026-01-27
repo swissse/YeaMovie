@@ -8,8 +8,6 @@ interface Pesponse {
 }
 
 export function getMovieInfo(id?: number): Pesponse {
-  console.log(typeof id);
-
   return useFetch(`https://api.poiskkino.dev/v1.4/movie/${id}`, {
     id,
   });

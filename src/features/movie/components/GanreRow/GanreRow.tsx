@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { ganre } from '../../../home/constants';
+import { useEffect, useMemo, useState } from 'react';
+import { ganres } from '../../../home/constants';
 import s from './GanreRow.module.css';
 import SliderButtons from '../SliderButtons/SliderButtons';
 import GanreCard from '../GanreCard/GanreCard';
@@ -11,12 +11,23 @@ interface GanreRowProps {
 
 export default function GanreRow({ type }: GanreRowProps) {
   const [page, setPage] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState(true);
   const skeletonsCard = Array(5).fill(null);
+  const [loadedCount, setLoadedCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const ganrePage = useMemo(() => {
-    return ganre.slice((page - 1) * 5, page * 5);
+  useEffect(() => {
+    setLoadedCount(0);
+    setIsLoading(true);
   }, [page]);
+  const ganrePage = useMemo(() => {
+    return ganres.slice((page - 1) * 5, page * 5);
+  }, [page]);
+
+  useEffect(() => {
+    if (loadedCount >= 1) {
+      setIsLoading(false);
+    }
+  }, [loadedCount, page]);
 
   return (
     <div className={s.ganre_row_wrapper}>
@@ -45,7 +56,15 @@ export default function GanreRow({ type }: GanreRowProps) {
               );
             })}
           {ganrePage.map(ganre => {
-            return <GanreCard setIsLoading={setIsLoading} ganre={ganre} type={type} page={page} />;
+            return (
+              <GanreCard
+                key={ganre}
+                ganre={ganre}
+                type={type}
+                page={page}
+                onLoaded={() => setLoadedCount(c => c + 1)}
+              />
+            );
           })}
         </div>
       </>

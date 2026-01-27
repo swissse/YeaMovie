@@ -4,16 +4,18 @@ import { getGanreRow } from '../../../home/api/rest';
 import { GanreRowRequest } from '../../../home/constants';
 import s from './GanreCard.module.css';
 import Loader from '../../../../shared/ui/Loader';
+import { useNavigate } from 'react-router';
 
 interface GanreCardProps {
   ganre: string;
   type: string;
   page: number;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  onLoaded: any;
 }
 
-export default function GanreCard({ ganre, type, page, setIsLoading }: GanreCardProps) {
+export default function GanreCard({ ganre, type, page, onLoaded }: GanreCardProps) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoaded(false);
@@ -22,7 +24,6 @@ export default function GanreCard({ ganre, type, page, setIsLoading }: GanreCard
   const finalGanreRowRequest = { ...GanreRowRequest, type, ganre };
 
   const { data, isLoading } = getGanreRow(finalGanreRowRequest);
-  setIsLoading(isLoading);
 
   const apiData = data as {
     docs: Film[];
@@ -32,16 +33,23 @@ export default function GanreCard({ ganre, type, page, setIsLoading }: GanreCard
     pages: number;
   } | null;
 
+  const handleGanreSearch = () => {
+    navigate(`/search?g=${encodeURIComponent(ganre.trim())}`);
+  };
+
   const films = apiData?.docs || [];
   return (
     <>
-      <div className={`${s.ganre_card} ${!isLoading && s.block}`}>
+      <div onClick={() => handleGanreSearch()} className={`${s.ganre_card}`}>
         <div className={s.ganre_img}>
           {films.map(img => {
             return (
               <img
                 key={img.id}
-                onLoad={() => setIsLoaded(true)}
+                onLoad={() => {
+                  setIsLoaded(true);
+                  onLoaded();
+                }}
                 className={`${s.ganre_poster} ${isLoaded && s.visible}`}
                 src={img.poster?.url}
               />
@@ -67,12 +75,6 @@ export default function GanreCard({ ganre, type, page, setIsLoading }: GanreCard
           </button>
         </div>
       </div>
-
-      {isLoading && (
-        <div className={s.ganre_card}>
-          <Loader size={50} color="#E50000" />
-        </div>
-      )}
     </>
   );
 }

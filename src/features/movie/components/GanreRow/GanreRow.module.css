@@ -28,10 +28,11 @@
 }
 
 .skeleton_card {
+  position: relative;
   background: #1A1A1A;
   border: 1px solid #262626;
   border-radius: 10px;
   padding: 24px;
-  width: 226px;
-  height: 264px;
+  width: 225px;
+  height: 260px;
 }

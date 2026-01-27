@@ -18,6 +18,10 @@ export default function FilmCard({ filmData, typeContent, type }: FilmCardProps)
     }
   }, []);
 
+  useEffect(() => {
+    setIsLoaded(false);
+  }, [filmData.id]);
+
   const resultInfo = () => {
     if (type === 'tv-series') {
       return (

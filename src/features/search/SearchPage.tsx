@@ -1,22 +1,31 @@
-import { Link, useLocation } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
+import { useEffect, useState } from 'react';
 import Header from '../../shared/ui/Header/Header';
 import s from './SearchPage.module.css';
-import { useState } from 'react';
-import { SearchValueRequest } from '../home/constants';
-import { useSearchValue } from './hooks/useSearchValue';
+import { ganres, SearchValueRequest } from '../home/constants';
+import { useSearch } from './hooks/useSearchValue';
 import type { Film } from '../../shared/Types';
 import FilmCard from '../movie/components/FilmCard/FilmCard';
 import SliderButtons from '../movie/components/SliderButtons/SliderButtons';
 import Loader from '../../shared/ui/Loader';
 
 export default function SearchPage() {
-  const [page, setPage] = useState<number>(1);
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const query = params.get('q') || '';
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const finalRequest = query ? { ...SearchValueRequest, query, page } : null;
-  const { data, isLoading } = useSearchValue(finalRequest ?? SearchValueRequest);
+  const querySearch = searchParams.get('q') ?? '';
+  const ganreValue = searchParams.get('g') ?? '';
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    setPage(1);
+  }, [querySearch, ganreValue]);
+
+  const { data, isLoading } = useSearch({
+    page,
+    limit: SearchValueRequest.limit,
+    query: querySearch || undefined,
+    genre: ganreValue || undefined,
+  });
 
   const apiData = data as {
     docs: Film[];
@@ -27,23 +36,45 @@ export default function SearchPage() {
   } | null;
 
   const films = apiData?.docs || [];
-  console.log(data, query, finalRequest);
+
   return (
     <>
-      <Header />
+      <Header>
+        <select
+          className={s.select}
+          value={ganreValue}
+          onChange={e => {
+            const value = e.target.value;
+
+            setSearchParams(value ? { g: value } : {});
+          }}
+        >
+          <option value="">По названию</option>
+          {ganres.map(genre => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+      </Header>
+
       <div className={s.searchPage_container}>
-        {!isLoading ? (
-          films.map(film => {
-            return (
-              <Link to={`/movie/${film.id}`} key={film.id}>
-                <FilmCard filmData={film} typeContent="search" />
-              </Link>
-            );
-          })
-        ) : (
-          <Loader size={50} color="#E50000" />
+        {isLoading && <Loader size={50} color="#E50000" />}
+
+        {films.map(film => (
+          <Link to={`/movie/${film.id}`} key={film.id}>
+            <FilmCard filmData={film} typeContent="search" />
+          </Link>
+        ))}
+
+        {!isLoading && !films.length && data && (
+          <div className={s.no__result}>
+            <img src="sad.png" alt="" />
+            <p>Нет результатов</p>
+          </div>
         )}
-        {!isLoading && (
+
+        {!isLoading && apiData && apiData.pages > 1 && (
           <SliderButtons setPage={setPage} page={page} type="search" lastPage={apiData?.pages} />
         )}
       </div>

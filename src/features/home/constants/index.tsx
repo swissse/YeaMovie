@@ -27,7 +27,12 @@ export const SearchValueRequest = {
   page: 1,
 };
 
-export const ganre = [
+export const SearchGanreRequest = {
+  limit: 15,
+  page: 1,
+};
+
+export const ganres = [
   'боевик',
   'ужасы',
   'драма',

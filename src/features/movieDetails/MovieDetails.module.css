@@ -26,6 +26,19 @@
   visibility: visible;
 }
 
+.no_desc {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  color: #FFF;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+
 .banner_container::after {
   content: '';
   position: absolute;
@@ -169,15 +182,22 @@
 .persons_row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  height: 125px;
+  overflow: hidden;
 
   img {
     object-fit: cover;
-    width: 72.5px;
-    height: 89px;
+    max-height: 100%;
     border-radius: 10px;
   }
+}
+
+.last_page {
+  display: flex;
+  justify-content: start;
+  gap: 20px;
 }
 
 .similarMovies_row {

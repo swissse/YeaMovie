@@ -1,10 +1,12 @@
 .ganre_card {
+  position: relative;
+  min-height: 222px;
   max-width: 224px;
   background: #1A1A1A;
   border: 1px solid #262626;
   border-radius: 10px;
   padding: 22px;
-  display: none;
+  overflow: hidden;
 }
 
 .ganre_img {
@@ -36,12 +38,12 @@
   visibility: hidden;
 }
 
-.visible {
-  visibility: visible;
+.no_visibility {
+  visibility: hidden;
 }
 
-.block {
-  display: block;
+.visible {
+  visibility: visible;
 }
 
 .ganre_name {
